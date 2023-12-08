@@ -3,7 +3,6 @@
 shopt -s expand_aliases
 
 alias str='declare'
-alias const='declare -r'
 alias int='declare -i'
 alias bool='declare'
 alias array='declare -a'
@@ -16,9 +15,6 @@ const() {
         echo "declare -r"
     fi
 }
-
-const str x
-const int y
 
 str GREEN=$'\e[1;32m'
 str YELLOW=$'\e[1;33m'
