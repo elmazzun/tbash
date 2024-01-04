@@ -2,6 +2,8 @@
 
 BASH with types (kinda).
 
+By harnessing the power of aliases and obscuring the complexities of BASH, I am implementing typed BASH.
+
 Work (heavily) in progress.
 
 ## Rules

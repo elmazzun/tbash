@@ -2,6 +2,7 @@
 
 shopt -s expand_aliases
 
+# Remeber that 'declare' inside a function automatically makes the variable local
 alias str='declare'
 alias int='declare -i'
 alias bool='declare'
@@ -72,11 +73,11 @@ equal() {
     fi
 
     if [[ "$FIRST_TYPE" -eq "$TYPE_STRING" ]]; then
-        [[ "$FIRST" == "$SECOND" ]] && $TRUE || $FALSE
+        [[ "$FIRST" == "$SECOND" ]] && echo $TRUE || echo $FALSE
     fi
 
     if [[ "$FIRST_TYPE" -eq "$TYPE_INTEGER" ]]; then
-        [[ "$FIRST" -eq "$SECOND" ]] && $TRUE || $FALSE
+        [[ "$FIRST" -eq "$SECOND" ]] && echo $TRUE || echo $FALSE
     fi
 }
 
@@ -97,15 +98,29 @@ len() {
 
 #################################### Array ####################################
 
-# This function is missing input validation: you may pass
+# This function is missing input validation: what happens if I pass an array
+# or an associative array to this function?
 create_array() {
     array a=( "${@}" )
     echo "${a[@]}"
 }
 
 find_in_array() {
-    local findme="$1"
+    # TODO: check that at least 2 elements are provided
+    bool found=$FALSE
+    local FINDME="$1"
+    shift
 
+    for val in "${@}"; do
+        if equal "$val" "$FINDME"; then
+            found=$TRUE
+            echo "$TRUE"
+            return 0
+        fi
+    done
+
+    echo "$FALSE"
+    return 1
 }
 
 pop_from_array() {
